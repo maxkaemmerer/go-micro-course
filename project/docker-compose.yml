@@ -1,0 +1,15 @@
+version: "3.6"
+
+services:
+
+  broker-service:
+    build:
+      context: ./../broker-service
+      dockerfile: broker-service.Dockerfile
+    restart: always
+    ports:
+      - "8080:80"
+    # error in course, not supported in newer compose versions
+    # deploy:
+      # mode: replicated
+      # replicas: 1
