@@ -2,5 +2,6 @@ brokerApp
 frontApp
 authApp
 loggerServiceApp
+mailApp
 athentication-service/dbdata
 dbdata
