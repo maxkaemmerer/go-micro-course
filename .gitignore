@@ -3,5 +3,6 @@ frontApp
 authApp
 loggerServiceApp
 mailApp
+listenerApp
 athentication-service/dbdata
 dbdata
