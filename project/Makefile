@@ -12,7 +12,7 @@ up:
 	@echo "Docker images started!"
 
 ## up_build: stops docker-compose (if running), builds all projects and starts docker compose
-up_build: build_broker build_auth build_logger build_mailer build_listener
+up_build: build_front build_broker build_auth build_logger build_mailer build_listener
 	@echo "Stopping docker images (if running...)"
 	docker-compose down
 	@echo "Building (when required) and starting docker images..."
@@ -58,7 +58,7 @@ build_auth:
 ## build_front: builds the frone end binary
 build_front:
 	@echo "Building front end binary..."
-	cd ../front-end && env CGO_ENABLED=0 go build -o ${FRONT_END_BINARY} ./cmd/web
+	cd ../front-end && env GOOS=linux CGO_ENABLED=0 go build -o ${FRONT_END_BINARY} ./cmd/web
 	@echo "Done!"
 
 ## start: starts the front end
@@ -80,3 +80,21 @@ install-protobuf-and-grpc:
 build-protobuf:
 	cd ../logger-service/logs && protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative logs.proto
 	cd ../broker-service/logs && protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative logs.proto
+
+build-and-push-images:
+	cd caddy && docker image build -t maxkaemmerer/caddy:1.0.0 -f caddy.Dockerfile .
+	cd caddy && docker image build -t maxkaemmerer/caddy-production:1.0.1 -f caddy.production.Dockerfile .
+	cd ../front-end && docker image build -t maxkaemmerer/frontend:1.0.1 -f frontend.Dockerfile .
+	cd ../mail-service && docker image build -t maxkaemmerer/mail-service:1.0.0 -f mail-service.Dockerfile .
+	cd ../logger-service && docker image build -t maxkaemmerer/logger-service:1.0.1 -f logger-service.Dockerfile .
+	cd ../broker-service && docker image build -t maxkaemmerer/broker-service:1.0.1 -f broker-service.Dockerfile .
+	cd ../authentication-service && docker image build -t maxkaemmerer/auth-service:1.0.0 -f authentication-service.Dockerfile .
+	cd ../listener-service && docker image build -t maxkaemmerer/listener-service:1.0.0 -f listener-service.Dockerfile .
+	docker image push maxkaemmerer/caddy:1.0.0
+	docker image push maxkaemmerer/caddy-production:1.0.1
+	docker image push maxkaemmerer/frontend:1.0.1
+	docker image push maxkaemmerer/logger-service:1.0.1
+	docker image push maxkaemmerer/mail-service:1.0.0
+	docker image push maxkaemmerer/broker-service:1.0.1
+	docker image push maxkaemmerer/auth-service:1.0.0
+	docker image push maxkaemmerer/listener-service:1.0.0
