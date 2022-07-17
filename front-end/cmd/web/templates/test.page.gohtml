@@ -45,6 +45,8 @@
         let received = document.getElementById("received");
         let sent = document.getElementById("payload");
 
+        const baseURL = {{.BrokerURL}}
+
         logBtn.addEventListener("click", () => {
             const payload = {
                 action : "log",
@@ -63,7 +65,7 @@
                 headers: headers
             };
 
-            fetch({{print .BrokerURL "/handle"}}, body)
+            fetch(`${baseURL}/handle`, body)
                 .then((response) => response.json())
                 .then((data) => {
                     sent.innerHTML = JSON.stringify(payload, undefined, 4);
@@ -98,7 +100,7 @@
                 headers: headers
             };
 
-            fetch({{print .BrokerURL "/log-grpc"}}, body)
+            fetch(`${baseURL}/log-grp`, body)
                 .then((response) => response.json())
                 .then((data) => {
                     sent.innerHTML = JSON.stringify(payload, undefined, 4);
@@ -134,7 +136,7 @@
                 headers: headers
             };
 
-            fetch({{print .BrokerURL "/handle"}}, body)
+            fetch(`${baseURL}/handle`, body)
                 .then((response) => response.json())
                 .then((data) => {
                     sent.innerHTML = JSON.stringify(payload, undefined, 4);
@@ -157,7 +159,7 @@
                 method: "POST"
             };
 
-            fetch(({{.BrokerURL}}, body)
+            fetch(baseURL, body)
                 .then((response) => response.json())
                 .then((data) => {
                     sent.innerHTML = "empty post request";
@@ -192,7 +194,7 @@
                 headers: headers
             };
 
-            fetch({{print .BrokerURL "/handle"}}, body)
+            fetch(`${baseURL}/log-grpc`, body)
                 .then((response) => response.json())
                 .then((data) => {
                     sent.innerHTML = JSON.stringify(payload, undefined, 4);

@@ -87,7 +87,7 @@ build-and-push-images:
 	cd ../front-end && docker image build -t maxkaemmerer/frontend:1.0.1 -f frontend.Dockerfile .
 	cd ../mail-service && docker image build -t maxkaemmerer/mail-service:1.0.0 -f mail-service.Dockerfile .
 	cd ../logger-service && docker image build -t maxkaemmerer/logger-service:1.0.1 -f logger-service.Dockerfile .
-	cd ../broker-service && docker image build -t maxkaemmerer/broker-service:1.0.1 -f broker-service.Dockerfile .
+	cd ../broker-service && docker image build -t maxkaemmerer/broker-service:1.0.3 -f broker-service.Dockerfile .
 	cd ../authentication-service && docker image build -t maxkaemmerer/auth-service:1.0.0 -f authentication-service.Dockerfile .
 	cd ../listener-service && docker image build -t maxkaemmerer/listener-service:1.0.0 -f listener-service.Dockerfile .
 	docker image push maxkaemmerer/caddy:1.0.0
@@ -95,6 +95,6 @@ build-and-push-images:
 	docker image push maxkaemmerer/frontend:1.0.1
 	docker image push maxkaemmerer/logger-service:1.0.1
 	docker image push maxkaemmerer/mail-service:1.0.0
-	docker image push maxkaemmerer/broker-service:1.0.1
+	docker image push maxkaemmerer/broker-service:1.0.3
 	docker image push maxkaemmerer/auth-service:1.0.0
 	docker image push maxkaemmerer/listener-service:1.0.0
